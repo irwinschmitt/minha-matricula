@@ -11,16 +11,10 @@ const routes = [
     component: TheSearch,
   },
   {
-    path: "/grade",
-    name: "Schedule",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/TheSchedule.vue"),
-  },
-  {
     path: "/disciplina/:id",
     name: "Course",
     component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/TheCourse.vue"),
+      import(/* webpackChunkName: "course" */ "@/views/TheCourse.vue"),
   },
 ];
 
