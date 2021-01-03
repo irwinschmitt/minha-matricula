@@ -1,11 +1,16 @@
 <template>
   <section>
-    <h1>Search</h1>
+    <SearchToolbar />
   </section>
 </template>
 
 <script>
+import SearchToolbar from "@/components/SearchToolbar";
+
 export default {
   name: "TheSearch",
+  components: {
+    SearchToolbar
+  }
 };
 </script>
