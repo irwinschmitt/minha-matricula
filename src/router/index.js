@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import TheSearch from "@/views/TheSearch.vue";
+import TheCourse from "@/views/TheCourse.vue";
 
 Vue.use(VueRouter);
 
@@ -13,8 +14,7 @@ const routes = [
   {
     path: "/disciplina/:id",
     name: "Course",
-    component: () =>
-      import(/* webpackChunkName: "course" */ "@/views/TheCourse.vue"),
+    component: TheCourse
   },
 ];
 
