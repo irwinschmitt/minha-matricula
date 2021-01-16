@@ -1,37 +1,50 @@
 <template>
   <section id="search-toolbar">
-    <v-row>
-      <v-col cols="12">
-        <v-form @submit="submitSearch">
+    <v-form @submit="submitSearch">
+      <v-row
+        align="center"
+        justify="center"
+      >
+        <v-col cols="12">
           <v-text-field
             v-model="params.text"
             outlined
             rounded
             label="Busque por uma disciplina"
+            append-outer-icon="mdi-arrow-right"
             hide-details
             clearable
-            append-icon="mdi-arrow-right"
-            @click:append="submitSearch"
+            max="80"
+            @click:append-outer="submitSearch()"
+            @keydown.enter.prevent="submitSearch()"
           />
-        </v-form>
-      </v-col>
-      <v-col>
-        <v-btn
-          v-for="(filter, key) of filters"
-          :key="key"
-          class="mx-2"
-          outlined
-          rounded
-          small
-          @click="openDialog(key)"
-        >
-          {{ filter.title }}
-        </v-btn>
-      </v-col>
-    </v-row>
+        </v-col>
+
+        <v-col>
+          <span
+            v-for="(filter, key) of filters"
+            :key="key"
+          >
+            <v-btn
+              v-if="filter"
+              class="mx-2"
+              outlined
+              rounded
+              small
+              @click="handleDialog(key)"
+            >
+              {{ filter.title }}
+            </v-btn>
+          </span>
+        </v-col>
+      </v-row>
+    </v-form>
+
     <v-dialog
       v-if="dialog.key"
       v-model="dialog.value"
+      transition="scroll-y-transition"
+      max-width="500"
     >
       <v-card>
         <v-card-title>
@@ -45,6 +58,27 @@
             :label="option.title"
           />
         </v-card-text>
+        <v-divider />
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            color="grey"
+            text
+            @click="handleDialog(false)"
+          >
+            Cancelar
+          </v-btn>
+          <v-btn
+            color="primary"
+            text
+            @click="
+              submitSearch();
+              handleDialog(false);
+            "
+          >
+            Salvar
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </section>
@@ -55,6 +89,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "SearchToolbar",
+
   data: () => ({
     params: {
       text: "",
@@ -63,12 +98,14 @@ export default {
     },
     dialog: {
       value: false,
-      key: ""
+      key: null
     }
   }),
+
   computed: {
     ...mapGetters({ filters: "Algolia/getFilters" })
   },
+
   created() {
     this.getFilters();
   },
@@ -77,12 +114,18 @@ export default {
     getFilters() {
       this.$store.dispatch("Algolia/getFilters");
     },
-    openDialog(key) {
-      this.dialog.value = true;
-      this.dialog.key = key;
+    handleDialog(key) {
+      if (key) {
+        this.dialog.value = true;
+        this.dialog.key = key;
+      } else {
+        this.dialog.value = false;
+        this.dialog.key = null;
+      }
     },
     submitSearch() {
-      this.$store.dispatch("Algolia/searchCourses", this.params);
+      console.log("SUBMITED");
+      // this.$store.dispatch("Algolia/searchCourses", this.params);
     }
   }
 };
