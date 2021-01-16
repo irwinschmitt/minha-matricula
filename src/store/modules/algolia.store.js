@@ -7,16 +7,10 @@ const client = algoliasearch(
 
 const state = {
   filters: {
-    credits: {
-      title: "Créditos",
-      options: []
-    },
-    departments: {
-      title: "Departamentos",
-      options: []
-    }
+    credits: null,
+    departments: null,
   },
-  courses: []
+  courses: [],
 };
 
 const getters = {
@@ -24,11 +18,11 @@ const getters = {
     return state.filters;
   },
   getSearchedCourses(state) {
-    return state.courses.filter(course => course.isSearchResult);
+    return state.courses.filter((course) => course.isSearchResult);
   },
   getSavedCourses(state) {
-    return state.courses.filter(course => course.isSaved);
-  }
+    return state.courses.filter((course) => course.isSaved);
+  },
 };
 
 const actions = {
@@ -42,9 +36,9 @@ const actions = {
             title: "Departamentos",
             options: hits.map(({ departmentId, departmentTitle }) => ({
               id: departmentId,
-              title: departmentTitle
-            }))
-          }
+              title: departmentTitle,
+            })),
+          },
         });
       });
 
@@ -57,15 +51,15 @@ const actions = {
             title: "Créditos",
             options: hits.map(({ timeLoad }) => {
               const credits = timeLoad / 15;
-              const plural = credits === 1 ? "crédito" : "créditos";
+              const grammaticalNumber = credits === 1 ? "crédito" : "créditos";
 
               return {
                 id: timeLoad,
-                title: `${credits} ${plural} (${timeLoad}h)`,
-                credits
+                title: `${credits} ${grammaticalNumber} (${timeLoad}h)`,
+                credits,
               };
-            })
-          }
+            }),
+          },
         });
       });
   },
@@ -80,9 +74,9 @@ const actions = {
         indexName: "prod_COURSES",
         query: text,
         params: {
-          hitsPerPage: 20
-        }
-      }
+          hitsPerPage: 20,
+        },
+      },
     ];
 
     client
@@ -95,7 +89,7 @@ const actions = {
   },
   clearSearchResults({ commit }) {
     commit("SET_SEARCH_RESULTS");
-  }
+  },
 };
 
 const mutations = {
@@ -104,7 +98,7 @@ const mutations = {
   // },
   SET_FILTER(state, filter) {
     Object.assign(state.filters, filter);
-    console.log(state.filters);
+    // console.log(state.filters);
   },
   SET_SEARCH_RESULTS(state, results) {
     state;
@@ -118,7 +112,7 @@ const mutations = {
         state.course.splice(index, 1);
       }
     });
-  }
+  },
 };
 
 export default {
@@ -126,5 +120,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 };
