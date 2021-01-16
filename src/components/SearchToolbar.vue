@@ -39,6 +39,9 @@
         </v-col>
       </v-row>
     </v-form>
+    {{ params.new }}
+    <br>
+    {{ params.saved }}
 
     <v-dialog
       v-if="dialog.key"
@@ -55,6 +58,8 @@
           <v-checkbox
             v-for="option in filters[dialog.key].options"
             :key="option.value"
+            v-model="params.new[dialog.key]"
+            :value="option.id"
             :label="option.title"
           />
         </v-card-text>
@@ -62,18 +67,22 @@
         <v-card-actions>
           <v-spacer />
           <v-btn
-            color="grey"
             text
-            @click="handleDialog(false)"
+            @click="
+              saveSelected(false);
+              handleDialog(null);
+            "
           >
             Cancelar
           </v-btn>
           <v-btn
             color="primary"
             text
+            :disabled="dataNotChanged"
             @click="
+              saveSelected(true);
               submitSearch();
-              handleDialog(false);
+              handleDialog(null);
             "
           >
             Salvar
@@ -92,9 +101,16 @@ export default {
 
   data: () => ({
     params: {
-      text: "",
-      credits: "",
-      departments: ""
+      new: {
+        text: null,
+        credits: [],
+        departments: []
+      },
+      saved: {
+        text: null,
+        credits: [],
+        departments: []
+      }
     },
     dialog: {
       value: false,
@@ -103,7 +119,16 @@ export default {
   }),
 
   computed: {
-    ...mapGetters({ filters: "Algolia/getFilters" })
+    ...mapGetters({ filters: "Algolia/getFilters" }),
+    dataNotChanged() {
+      const newParam = this.params.new[this.dialog.key];
+      const savedParam = this.params.saved[this.dialog.key];
+
+      return (
+        newParam.length === savedParam.length &&
+        newParam.every((v, i) => v === savedParam[i])
+      );
+    }
   },
 
   created() {
@@ -115,16 +140,15 @@ export default {
       this.$store.dispatch("Algolia/getFilters");
     },
     handleDialog(key) {
-      if (key) {
-        this.dialog.value = true;
-        this.dialog.key = key;
-      } else {
-        this.dialog.value = false;
-        this.dialog.key = null;
-      }
+      this.dialog.value = !!key;
+      this.dialog.key = key;
+    },
+    saveSelected(shouldSave) {
+      if (shouldSave) Object.assign(this.params.saved, this.params.new);
+      else Object.assign(this.params.new, this.params.saved);
     },
     submitSearch() {
-      console.log("SUBMITED");
+      console.log(this.params.saved);
       // this.$store.dispatch("Algolia/searchCourses", this.params);
     }
   }
