@@ -1,10 +1,7 @@
 <template>
   <section id="search-toolbar">
     <v-form @submit="submitSearch">
-      <v-row
-        align="center"
-        justify="center"
-      >
+      <v-row align="center" justify="center">
         <v-col cols="12">
           <v-text-field
             v-model="params.text"
@@ -21,10 +18,7 @@
         </v-col>
 
         <v-col>
-          <span
-            v-for="(filter, key) of filters"
-            :key="key"
-          >
+          <span v-for="(filter, key) of filters" :key="key">
             <v-btn
               v-if="filter"
               class="mx-2"
@@ -40,7 +34,7 @@
       </v-row>
     </v-form>
     {{ params.new }}
-    <br>
+    <br />
     {{ params.saved }}
 
     <v-dialog
@@ -104,18 +98,18 @@ export default {
       new: {
         text: null,
         credits: [],
-        departments: []
+        departments: [],
       },
       saved: {
         text: null,
         credits: [],
-        departments: []
-      }
+        departments: [],
+      },
     },
     dialog: {
       value: false,
-      key: null
-    }
+      key: null,
+    },
   }),
 
   computed: {
@@ -128,7 +122,7 @@ export default {
         newParam.length === savedParam.length &&
         newParam.every((v, i) => v === savedParam[i])
       );
-    }
+    },
   },
 
   created() {
@@ -150,9 +144,7 @@ export default {
     submitSearch() {
       console.log(this.params.saved);
       // this.$store.dispatch("Algolia/searchCourses", this.params);
-    }
-  }
+    },
+  },
 };
 </script>
-
-<style></style>

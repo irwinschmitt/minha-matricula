@@ -1,20 +1,11 @@
 <template>
   <section id="app-toolbar">
-    <v-app-bar
-      app
-      flat
-      outlined
-    >
-      <v-toolbar-title>
-        Minha Matrícula
-      </v-toolbar-title>
+    <v-app-bar app flat outlined>
+      <v-toolbar-title> Minha Matrícula </v-toolbar-title>
 
       <v-spacer />
 
-      <v-btn
-        icon
-        @click="toggleDrawer"
-      >
+      <v-btn icon @click="toggleDrawer">
         <v-icon>mdi-format-list-bulleted-square</v-icon>
       </v-btn>
     </v-app-bar>
@@ -27,8 +18,8 @@ export default {
   methods: {
     toggleDrawer() {
       this.$emit("toggle-drawer");
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -10,7 +10,7 @@ import SearchToolbar from "@/components/SearchToolbar";
 export default {
   name: "TheSearch",
   components: {
-    SearchToolbar
-  }
+    SearchToolbar,
+  },
 };
 </script>
