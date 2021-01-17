@@ -21,7 +21,7 @@
           <span v-for="(filter, key) of filters" :key="key">
             <v-btn
               v-if="filter"
-              class="mx-2"
+              class="mr-2"
               outlined
               rounded
               small
@@ -33,9 +33,9 @@
         </v-col>
       </v-row>
     </v-form>
-    {{ params.new }}
+    <!-- {{ params.new }}
     <br />
-    {{ params.saved }}
+    {{ params.saved }} -->
 
     <v-dialog
       v-if="dialog.key"
