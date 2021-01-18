@@ -57,7 +57,7 @@
             :value="option.id"
             :label="option.title"
           >
-            <template #label>
+            <template v-if="dialog.key === 'departments'" #label>
               <v-row align="center" no-gutters>
                 <v-col cols="3" sm="2">
                   <span>
