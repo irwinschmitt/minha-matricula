@@ -56,7 +56,20 @@
             v-model="params.new[dialog.key]"
             :value="option.id"
             :label="option.title"
-          />
+          >
+            <template #label>
+              <v-row align="center" no-gutters>
+                <v-col cols="3" sm="2">
+                  <span>
+                    <v-chip outlined small>{{ option.id }}</v-chip>
+                  </span>
+                </v-col>
+                <v-col class="mx-2">
+                  <span>{{ option.title }}</span>
+                </v-col>
+              </v-row>
+            </template>
+          </v-checkbox>
         </v-card-text>
         <v-divider />
         <v-card-actions>
