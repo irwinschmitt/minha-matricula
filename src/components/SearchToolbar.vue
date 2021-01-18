@@ -4,7 +4,7 @@
       <v-row align="center" justify="center">
         <v-col cols="12">
           <v-text-field
-            v-model="params.text"
+            v-model="params.saved.text"
             outlined
             rounded
             label="Busque por uma disciplina"
@@ -42,6 +42,7 @@
       v-model="dialog.value"
       transition="scroll-y-transition"
       max-width="500"
+      scrollable
     >
       <v-card>
         <v-card-title>
@@ -143,7 +144,7 @@ export default {
     },
     submitSearch() {
       console.log(this.params.saved);
-      // this.$store.dispatch("Algolia/searchCourses", this.params);
+      this.$store.dispatch("Algolia/searchCourses", this.params);
     },
   },
 };

@@ -27,21 +27,23 @@ const getters = {
 
 const actions = {
   getFilters({ commit }) {
+    // Departments
     client
-      .initIndex("prod_COURSES")
+      .initIndex("prod_DEPARTMENTS")
       .search("", { distinct: 1 })
       .then(({ hits }) => {
         commit("SET_FILTER", {
           departments: {
             title: "Departamentos",
-            options: hits.map(({ departmentId, departmentTitle }) => ({
-              id: departmentId,
-              title: departmentTitle,
+            options: hits.map(({ initials, title }) => ({
+              id: initials,
+              title,
             })),
           },
         });
       });
 
+    // Créditos
     client
       .initIndex("prod_CLASSES")
       .search("", { distinct: 1 })
