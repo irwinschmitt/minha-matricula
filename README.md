@@ -1,4 +1,6 @@
-# minha-matricula
+# Minha Matrícula
+
+- [Requisitos](#requisitos)
 
 ## Build Setup
 
@@ -18,3 +20,10 @@ $ yarn generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## Requisitos
+
+Requisito | Descrição
+-:|-
+RF001 | O sistema deve ser capaz de exibir informações de uma disciplina (disponíveis no SIGAA).
+RF002 | O sistema deve possibilitar buscas por disciplinas com opções de filtros por departamento, horário e quantidade de créditos.
